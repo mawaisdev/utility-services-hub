@@ -1,0 +1,25 @@
+{
+  "name": "utility-services-hub",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:api\"",
+    "dev:web": "npm run dev -w web",
+    "dev:api": "cd apps/api && poetry run uvicorn src.utility_services_api.main:app --reload --port 8000",
+    "build": "npm run build:web",
+    "build:web": "npm run build -w web",
+    "lint": "npm run lint:web && npm run lint:api",
+    "lint:web": "npm run lint -w web",
+    "lint:api": "cd apps/api && poetry run black src/utility_services_api tests && poetry run isort src/utility_services_api tests",
+    "test": "npm run test:web && npm run test:api",
+    "test:web": "npm run test -w web",
+    "test:api": "cd apps/api && poetry run pytest",
+    "setup": "npm install && cd apps/api && poetry install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
